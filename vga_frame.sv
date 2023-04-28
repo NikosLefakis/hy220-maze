@@ -39,16 +39,12 @@ logic [15:0] exit_pixel;
 
 //for addresses of maze , exit and player to get "data" from roms
 logic [10:0] maze_addr;
-assign maze_addr = (i_col >> 4) + ((i_row >> 4) << 6);
-
 logic [7:0] player_addr ;
-assign player_addr = (i_row & 4'b1111) + ((i_col & 4'b1111) << 4);
-
 logic [7:0] exit_addr ;
-assign exit_addr = (i_row & 4'b1111) + ((i_col & 4'b1111) << 4);
+
 
 //for row and cols of player and exit and i-st row and i-st column of frame
-logic [5:0] tmp_player_row,tmp_player_col,tmp_exit_row,tmp_exit_col;
+//logic [5:0] tmp_player_row,tmp_player_col,tmp_exit_row,tmp_exit_col;
 logic [9:0] tmp_row,tmp_col;
 
 //tmp for valid pixel!
@@ -58,20 +54,20 @@ logic tmp_pix_valid;
 //checking for reset (initialize tmp variables) 
 always_ff @(posedge clk)  begin
   if (rst) begin
-    tmp_player_row <= 0;
-    tmp_player_col <= 0;
-    tmp_exit_row <= 0;
-    tmp_exit_col <= 0;
+//    i_player_brow <= 0;
+//    i_player_bcol <= 0;
+//    i_exit_brow <= 0;
+//    i_exit_bcol <= 0;
     tmp_col <= 0;
     tmp_row <= 0;
     tmp_pix_valid <= 0;
    
   end
   else begin
-    tmp_player_row <= i_player_brow;
-    tmp_player_col <= i_player_bcol;
-    tmp_exit_row <= i_exit_brow;
-    tmp_exit_col <= i_exit_bcol;
+//    tmp_player_row <= i_player_brow;
+//    tmp_player_col <= i_player_bcol;
+//    tmp_exit_row <= i_exit_brow;
+//    tmp_exit_col <= i_exit_bcol;
     tmp_col <= i_col;
     tmp_row <= i_row;
     tmp_pix_valid <= i_pix_valid;
@@ -82,13 +78,17 @@ end
 
 // Keep the hierarchy of game ( player > exit > maze ) and display colours of pixels else display black colour 
 always_comb begin
+    maze_addr = (i_col >> 4) + ((i_row >> 4) << 6);
+    player_addr = (i_row & 4'b1111) + ((i_col & 4'b1111) << 4);
+    exit_addr = (i_row & 4'b1111) + ((i_col & 4'b1111) << 4);
+    
   if (tmp_pix_valid) begin
-    if (tmp_player_col == (tmp_col >> 4) && tmp_player_row == (tmp_row >> 4)) begin
+    if (i_player_bcol == (tmp_col >> 4) && i_player_brow == (tmp_row >> 4)) begin
       o_red = player_pixel[11:8];
       o_green = player_pixel[7:4];
       o_blue = player_pixel[3:0];
     end
-    else if (tmp_exit_col == (tmp_col >> 4) && tmp_exit_row == (tmp_row >> 4)) begin
+    else if (i_exit_bcol == (tmp_col >> 4) && i_exit_brow == (tmp_row >> 4)) begin
       o_red = exit_pixel[11:8];
       o_green = exit_pixel[7:4];
       o_blue = exit_pixel[3:0];
@@ -110,7 +110,8 @@ end
 // ROM Template Instantiation
 rom #(
   .size(2048),
-  .file("/home/n1ckos/Documents/lab2_code/roms/maze1.rom") 
+  .file("/home/n1ckos/Downloads/lab2_code/roms/maze1.rom") 
+  
 )
 maze_rom (
   .clk(clk),
@@ -121,7 +122,8 @@ maze_rom (
 
 rom #(
     .size(256),
-    .file("/home/n1ckos/Documents/lab2_code/roms/player.rom")
+    .file("/home/n1ckos/Downloads/lab2_code/roms/player.rom")
+  
 )
 player_rom (
   .clk(clk),
@@ -133,7 +135,8 @@ player_rom (
 
 rom #(
     .size(256),
-    .file("/home/n1ckos/Documents/lab2_code/roms/exit.rom")
+    .file("/home/n1ckos/Downloads/lab2_code/roms/exit.rom")
+    
 )
 exit_rom(
   .clk(clk),
