@@ -4,7 +4,7 @@
  * University of Crete
  * 
  * Date: 2023/02/06
- * Author: Nikos Lefakis cs4804
+ * Author: Nikos Lefakis 
  * Filename: vga_frame.sv
  * Description: Your description here
  *
@@ -54,20 +54,12 @@ logic tmp_pix_valid;
 //checking for reset (initialize tmp variables) 
 always_ff @(posedge clk)  begin
   if (rst) begin
-//    i_player_brow <= 0;
-//    i_player_bcol <= 0;
-//    i_exit_brow <= 0;
-//    i_exit_bcol <= 0;
     tmp_col <= 0;
     tmp_row <= 0;
     tmp_pix_valid <= 0;
    
   end
   else begin
-//    tmp_player_row <= i_player_brow;
-//    tmp_player_col <= i_player_bcol;
-//    tmp_exit_row <= i_exit_brow;
-//    tmp_exit_col <= i_exit_bcol;
     tmp_col <= i_col;
     tmp_row <= i_row;
     tmp_pix_valid <= i_pix_valid;
