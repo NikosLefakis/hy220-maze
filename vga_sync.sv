@@ -5,7 +5,7 @@
  * University of Crete
  * 
  * Date: 2023/04/07
- * Author: Nikos Lefakis csd4804
+ * Author: Nikos Lefakis 
  * Filename: vga_sync.sv
  * Description: Implements VGA HSYNC and VSYNC timings for 640 x 480 @ 60Hz
  *
@@ -86,9 +86,7 @@ always_ff @(posedge clk ) begin
                 vcnt <= vcnt;
              end
          end    
-     end
-     
-  //end of always_ff  block (non-blocking assignments here)      
+     end   
 end 
 
 
@@ -124,7 +122,7 @@ always_comb begin
     
         o_hsync = ~hsync_tmp;  //output wire for o_hsync  to connect in frame (horizontal)
     
-    //end of comb "block" (blocking assignments here)
+ 
 end
 
 
