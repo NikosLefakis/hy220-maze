@@ -1,2 +1,3 @@
 # hy220-maze
-The game maze  Mario with systemverilog  in lesson HY220 in CSD-UoC.
+The game called Maze with character Mario implemented in SystemVerilog in lesson HY220 in CSD-UoC.
+Have fun :)
